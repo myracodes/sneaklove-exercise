@@ -32,7 +32,7 @@ router.post("/signin", async(req, res, next)=>{
       // Display an error message telling the user that either the password
       // or the email is wrong
       req.flash("error", "Invalid credentials");
-      res.redirect("signin");
+      res.redirect("/signin");
       // res.render("auth/signin.hbs", { error: "Invalid credentials" });
     } else {
       // everything is fine so :
@@ -47,7 +47,7 @@ router.post("/signin", async(req, res, next)=>{
 
       req.flash("success", "Successfully logged in...");
       //res.redirect("/profile");
-      res.redirect("/index");
+      res.redirect("/");
     }
   }
 })
