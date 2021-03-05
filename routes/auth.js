@@ -13,23 +13,26 @@ const UserModel =require("../models/User")
 router.get("/signin", (req, res, next)=>res.render("signin"))
 
 router.post("/signin", async(req, res, next)=>{
-    const {email, password}=req.body
+    const {email, password}=req.body;
     const foundUser = await UserModel.findOne({ email: email });
-
+    console.log("-----ETAPE 1---------", foundUser);
   if (!foundUser) {
     //   Display an error message telling the user that either the password
     // or the email is wrong
+    console.log("-----ETAPE 2---------");
     req.flash("error", "Invalid credentials");
-    res.redirect("/auth/signin");
+    res.redirect("/signin");
+
     // res.render("auth/signin.hbs", { error: "Invalid credentials" });
   } else {
     // https://www.youtube.com/watch?v=O6cmuiTBZVs
-    const isSamePassword = bcrypt.compareSync(password, foundUser.password);
+    console.log("-----ETAPE 3---------");
+    const isSamePassword = await bcrypt.compareSync(password, foundUser.password);
     if (!isSamePassword) {
       // Display an error message telling the user that either the password
       // or the email is wrong
       req.flash("error", "Invalid credentials");
-      res.redirect("/auth/signin");
+      res.redirect("signin");
       // res.render("auth/signin.hbs", { error: "Invalid credentials" });
     } else {
       // everything is fine so :
@@ -71,10 +74,10 @@ router.post("/signup", async (req, res, next)=>{
       console.log("PASSWORD HERE," , hashedPassword)
     
       const dbRes = await UserModel.create(newUser);
-      console.log("DBRESULT", dbRes)
-      ("NEW USER HERE", newUser)
+      console.log("DBRESULT", dbRes);
+      console.log("NEW USER HERE", newUser);
       req.flash("success", "Congrats ! You are now registered !");
-      res.redirect("/auth/signin");
+      res.redirect("signin");
     }
   } catch (err) {
     let errorMessage = "";
@@ -83,7 +86,7 @@ router.post("/signup", async (req, res, next)=>{
     }
     console.log("-------ETAPE 4-------");
     req.flash("error", errorMessage);
-    res.redirect("/auth/signup");
+    res.redirect("signup");
   }
 })
 
