@@ -103,5 +103,9 @@ router.get("/logout", (req, res, next)=>{
   res.redirect("/")
 })
 
+router.get("/home", (req, res, next)=>{
+  res.redirect("/")
+})
+
 
 module.exports = router;
