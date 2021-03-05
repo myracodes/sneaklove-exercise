@@ -1,6 +1,8 @@
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
+const hbs = require("hbs");
+const path = require("path");
 
 // base dependencies
 const express = require("express");
@@ -22,7 +24,7 @@ app.use(logger("dev"));
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/view");
 app.use(express.static("public"));
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(path.join(__dirname + "/views/partials"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
