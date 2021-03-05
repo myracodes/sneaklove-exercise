@@ -58,7 +58,7 @@ router.post("/signup", async (req, res, next)=>{
     const newUser = { ...req.body };
     console.log("NEW USER HERE", newUser)
     const foundUser = await UserModel.findOne({ email: newUser.email });
-    console.log("NEW USER",foundUser)
+    console.log("FOUND USER",foundUser)
     console.log("-----ETAPE 1---------");
     if (foundUser) {
       console.log("-----ETAPE 2---------");
@@ -69,7 +69,9 @@ router.post("/signup", async (req, res, next)=>{
       const hashedPassword = bcrypt.hashSync(newUser.password, 10);
       newUser.password = hashedPassword;
       console.log("PASSWORD HERE," , hashedPassword)
-      await UserModel.create(newUser);
+    
+      const dbRes = await UserModel.create(newUser);
+      console.log("DBRESULT", dbRes)
       ("NEW USER HERE", newUser)
       req.flash("success", "Congrats ! You are now registered !");
       res.redirect("/auth/signin");
