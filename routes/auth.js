@@ -1,12 +1,14 @@
 const express = require("express");
-const router = new express.Router();
+const router = express.Router();
 
-const protectAdminRoute = require("./../middlewares/protectAdminRoute")
+// const protectAdminRoute = require("./../middlewares/protectAdminRoute") 
+// COMMENTED THIS TO AVOID THE MODULE ERROR//
+
 const bcrypt = require("bcrypt"); // lib to encrypt data
 const uploader = require("./../config/cloudinary");
 
 
-const UserModel =require("../model/User")
+const UserModel =require("../models/User")
 
 router.get("/signin", (req, res, next)=>res.render("signin"))
 
@@ -41,7 +43,8 @@ router.post("/signin", async(req, res, next)=>{
       // https://www.youtube.com/watch?v=OFRjZtYs3wY
 
       req.flash("success", "Successfully logged in...");
-      res.redirect("/profile");
+      //res.redirect("/profile");
+      res.redirect("/index");
     }
   }
 })
@@ -50,10 +53,12 @@ router.get("/signup", (req, res, next)=>{
   res.render('signup')
 })
 
-router.post("/signup", uploader.single("avatar"), async (req, res, next)=>{
+router.post("/signup", async (req, res, next)=>{
      try {
     const newUser = { ...req.body };
+    console.log("NEW USER HERE", newUser)
     const foundUser = await UserModel.findOne({ email: newUser.email });
+    console.log("NEW USER",foundUser)
     console.log("-----ETAPE 1---------");
     if (foundUser) {
       console.log("-----ETAPE 2---------");
@@ -63,7 +68,9 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next)=>{
       console.log("-----ETAPE 3---------");
       const hashedPassword = bcrypt.hashSync(newUser.password, 10);
       newUser.password = hashedPassword;
+      console.log("PASSWORD HERE," , hashedPassword)
       await UserModel.create(newUser);
+      ("NEW USER HERE", newUser)
       req.flash("success", "Congrats ! You are now registered !");
       res.redirect("/auth/signin");
     }
@@ -86,30 +93,6 @@ router.get("/signout", (req, res, next)=>{
     res.redirect("/auth/signin");
   });
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
