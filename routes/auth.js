@@ -77,7 +77,7 @@ router.post("/signup", async (req, res, next)=>{
       console.log("DBRESULT", dbRes);
       console.log("NEW USER HERE", newUser);
       req.flash("success", "Congrats ! You are now registered !");
-      res.redirect("signin");
+      res.redirect("/signin");
     }
   } catch (err) {
     let errorMessage = "";
@@ -86,7 +86,7 @@ router.post("/signup", async (req, res, next)=>{
     }
     console.log("-------ETAPE 4-------");
     req.flash("error", errorMessage);
-    res.redirect("signup");
+    res.redirect("/signup");
   }
 })
 
@@ -95,10 +95,13 @@ router.get("/signout", (req, res, next)=>{
   req.session.destroy(function (err) {
     
     // cannot access session here anymore
-    res.redirect("/auth/signin");
+    res.redirect("/signin");
   });
 })
 
+router.get("/logout", (req, res, next)=>{
+  res.redirect("/")
+})
 
 
 module.exports = router;
