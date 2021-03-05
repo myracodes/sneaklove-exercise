@@ -13,4 +13,6 @@ mongoose.connection.on("connected", () => console.log("yay mongodb connected :)"
 mongoose.connection.on("error", () => console.log("nay db error sorry :("));
 
 
-//process.env.MONGO_URI
+//`${process.env.MONGO_URI}`
+
+// "mongodb://localhost/sneak_love";
