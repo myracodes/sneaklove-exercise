@@ -14,5 +14,8 @@
   <a href="/prod-edit/{{this._id}}" data-id-sneaker="{{this._id}}"><i class="fa fa-edit table-icon"></i></a>
 </td>
 <td class="table-division">
-  <span class="fa fa-trash table-icon" data-id-sneaker="{{this._id}}"  aria-hidden="true"></span>
+  <form action="/sneaker/{{this._id}}/delete" method="POST">
+  <button><span class="fa fa-trash table-icon" data-id-sneaker="{{this._id}}"  aria-hidden="true"></span>
+  </button>
+  </form>
 </td>

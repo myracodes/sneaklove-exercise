@@ -75,6 +75,19 @@ router.post("/prod-edit/:id", (req, res, next) => {
     .catch((err) => {
       console.log(err);
     })
+});
+
+// SNEAKER DELETE
+router.post('/sneaker/:id/delete', (req, res, next) => {
+  console.log("--------product delete ---------");
+  SneakerModel.findByIdAndDelete(req.params.id)
+  .then(() => {
+    console.log("--------product delete THEN ---------");
+    res.redirect("/sneakers/collection");
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 })
 
 
