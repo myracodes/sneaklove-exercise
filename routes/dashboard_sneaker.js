@@ -9,7 +9,14 @@ router.get("/prod-add", (req, res, next) => {
 
 router.post("/prod-add", async (req, res, next) => {
   console.log(req.body);
-  const { name, ref, size, description, price, category } = req.body;
+  const {
+    name,
+    ref,
+    size,
+    description,
+    price,
+    category
+  } = req.body;
   console.log(name, ref, size, description, price, category);
   try {
     await SneakerModel.create({
@@ -33,7 +40,9 @@ router.post("/prod-add", async (req, res, next) => {
 router.get("/prod-manage", (req, res, next) => {
   SneakerModel.find()
     .then((sneakers) => {
-        res.render("products_manage.hbs", {sneakers})
+      res.render("products_manage.hbs", {
+        sneakers
+      })
     })
     .catch((error) => {
       console.log(error, "ERROR IN THE MANAGE PRODUCTS ROUTE");
@@ -42,7 +51,31 @@ router.get("/prod-manage", (req, res, next) => {
 
 
 // SNEAKERS UPDATE
+router.get("/prod-edit/:id", (req, res) => {
+  console.log("--------product edit ---------", req.params.id);
+  SneakerModel.findById(req.params.id)
+    .then((sneaker) => {
+      console.log("kikou je suis dans then", sneaker);
+      res.render("product_edit.hbs", {
+        sneaker
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+});
 
+router.post("/prod-edit/:id", (req, res, next) => {
+  console.log("--------product edit post ---------", req.params.id);
+  SneakerModel.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      console.log("--------product edit THEN ---------", req.body);
+      res.redirect("/sneakers/collection");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
 
 
 module.exports = router;

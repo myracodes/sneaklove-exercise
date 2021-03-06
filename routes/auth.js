@@ -61,7 +61,7 @@ router.post("/signup", async (req, res, next)=>{
     if (foundUser) {
       console.log("-----ETAPE 2---------");
       req.flash("warning", "Email already registered");
-      res.redirect("/auth/signup");
+      res.redirect("/signup");
     } else {
       console.log("-----ETAPE 3---------");
       const hashedPassword = bcrypt.hashSync(newUser.password, 10);

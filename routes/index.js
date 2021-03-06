@@ -21,9 +21,9 @@ router.get("/one-product/:id", (req, res) => {
   res.render("one_product.hbs");
 });
 
-router.get("/product-edit/:id", (req, res) => {
-  res.render("product_edit.hbs");
-});
+// router.get("/prod-edit/:id", (req, res) => {
+//   res.render("product_edit.hbs");
+// });
 
 // router.get("/signup", (req, res) => {
 //   res.render("signup.hbs");
