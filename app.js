@@ -1,16 +1,17 @@
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
-const hbs = require("hbs");
-const path = require("path");
 
 // base dependencies
+const hbs = require("hbs");
+const path = require("path");
+const multer = require('multer');
+var upload = multer();
 const express = require("express");
 const app = express();
 const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-const hbo = require("hbs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -28,6 +29,7 @@ hbs.registerPartials(path.join(__dirname + "/views/partial"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(upload.array()); 
 
 // SESSION SETUP
 app.use(

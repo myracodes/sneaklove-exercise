@@ -41,12 +41,7 @@ router.post("/signin", async(req, res, next)=>{
       delete userObject.password; // remove password before saving user in session
       // console.log(req.session, "before defining current user");
       req.session.currentUser = userObject; // Stores the user in the session (data server side + a cookie is sent client side)
-
-      // https://www.youtube.com/watch?v=nvaE_HCMimQ
-      // https://www.youtube.com/watch?v=OFRjZtYs3wY
-
       req.flash("success", "Successfully logged in...");
-      //res.redirect("/profile");
       res.redirect("/");
     }
   }
