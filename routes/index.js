@@ -13,9 +13,9 @@ router.get("/", (req, res) => {
   res.render("index.hbs");
 });
 
-router.get("/sneakers/:cat", (req, res) => {
-  res.render("products.hbs");
-});
+// router.get("/sneakers/:cat", (req, res) => {
+//   res.render("products.hbs");
+// });
 
 router.get("/one-product/:id", (req, res) => {
   res.render("one_product.hbs");
